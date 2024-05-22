@@ -1,15 +1,16 @@
-name: "Roam Research backup"
+name: "Roam Research Backup and Tests"
 
 on:
   push:
     branches:
       - main
   schedule:
-      # Here you can change how often your backup runs. See https://crontab.guru/examples.html
-      - cron: "0 * * * *"
-
+    # Backup every hour
+    - cron: "0 * * * *"
+   
 jobs:
   backup:
+    if: github.event_name == 'push' || github.event.schedule == '0 * * * *'
     runs-on: ubuntu-latest
     name: Backup
     timeout-minutes: 10
@@ -43,3 +44,19 @@ jobs:
         uses: everruler12/git-auto-commit-action@latest
         with:
           commit_message: Automatic backup
+
+  tests:
+    if: github.event_name == 'schedule' && github.event.schedule == '0 0 * * *'
+    runs-on: ubuntu-latest
+    name: Run integration tests
+    steps:
+      - uses: actions/checkout@v3
+      # … your test steps here
+
+  workflow-keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: liskin/gh-workflow-keepalive@v1
