@@ -1,3 +1,7 @@
+
+      - name: Workflow Keepalive
+       uses: liskin/gh-workflow-keepalive@v1.2.1
+
 name: "Roam Research backup"
 
 on:
@@ -43,7 +47,3 @@ jobs:
         uses: everruler12/git-auto-commit-action@latest
         with:
           commit_message: Automatic backup
-
-      - name: Workflow Keepalive
-       uses: liskin/gh-workflow-keepalive@v1.2.1
-
