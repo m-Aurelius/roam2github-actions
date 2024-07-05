@@ -13,7 +13,7 @@ jobs:
     if: github.event_name == 'push' || github.event.schedule == '0 * * * *'
     runs-on: ubuntu-latest
     name: Backup
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v2
         with:
